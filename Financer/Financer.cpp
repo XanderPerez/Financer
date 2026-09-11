@@ -1,10 +1,12 @@
-// Program created by Xander Perez
 
 #include <iostream>
 #include <fstream>
 #include <cstring>
 #include <iomanip>
-#include <string>
+#include <string>\
+
+#include "PaymentQueue.h"
+
 
 int main()
 {
