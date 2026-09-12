@@ -4,12 +4,14 @@
 #include <iostream>
 #include <string>
 
+// Payment structure to hold payment details
 struct Payment {
 	std::string name;
 	double amount;
 	Payment* next;
 };
 
+// QueueNode structure to hold a payment and a pointer to the next node
 struct QueueNode {
 	Payment* data;
 	QueueNode* next;
@@ -20,6 +22,7 @@ struct QueueNode {
 	~QueueNode() { delete data; }
 };
 
+// PaymentQueue class definition
 class PaymentQueue {
 
 private:
@@ -32,6 +35,7 @@ public:
 		return front == nullptr;
 	}
 
+	// Enqueue a payment into the queue
 	PaymentQueue() {
 		front = nullptr;
 		rear = nullptr;
