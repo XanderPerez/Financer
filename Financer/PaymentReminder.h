@@ -75,67 +75,54 @@ public:
 		return true;
 	}
 
-    void checkReminder(std::string paymentName, double amount,
-        int dueDay, int currDay)
-    {
-        // Check for invalid information
-        if (paymentName.empty() || amount <= 0) {
-            std::cout << "\nInvalid payment details.\n";
-            return;
-        }
+	void checkReminder(std::string paymentName, double amount,
+		int dueDay, int currDay) {
 
-        // Check for invalid days
-        if (dueDay < 1 || dueDay > 31 ||
-            currDay < 1 || currDay > 31) {
+		// Checkes for invalid information
+		if (paymentName.empty() || amount <= 0) {
+			std::cout << "\nInvalid payment information\n";
+			return;
+		}
 
-            std::cout << "\nInvalid day entered.\n";
-            return;
-        }
+		// Checks for invalid days
+		if (dueDay < 1 || dueDay > 31 || currDay < 1 || currDay > 31) {
+			std::cout << "\nInvalid day entered.\n";
+			return;
+		}
+	
+		// payment is overdue
+		if (currDay > dueDay + gracePeriod) {
+			if (showOverduePayments) {
+				std::cout << "\nPayment " << paymentName << " of $" << amount
+					<< " is overdue. Late fee applied: $" << lateFee << "\n";
+			}
+		}
 
-        // Payment is overdue
-        if (currDay > dueDay + gracePeriod) {
+		// Payment is due today
+		else if (currDay == dueDay) {
+			if (showDueToday) {
+				std::cout << "\nPayment " << paymentName << " of $" << amount
+					<< " is due today." << " Amount owed: $" << amount << "\n";
+			}
+		}
 
-            if (showOverduePayments) {
-                std::cout << "\nPayment " << paymentName
-                    << " is overdue."
-                    << " Late fee: $"
-                    << lateFee << "\n";
-            }
-        }
+		// Payment passed due date but is still in grace period
+		else if (currDay > dueDay) {
+			std::cout << "\nPayment " << paymentName << " of $" << amount
+				<< " is past due but still in grace period. No late fee applied.\n";
+		}
 
-        // Payment is due today
-        else if (currDay == dueDay) {
+		// Payment is due soon
+		else if (currDay >= dueDay - reminderDays && currDay < dueDay) {
+			std::cout << "\nPayment " << paymentName << " of $" << amount
+				<< " is due in " << (dueDay - currDay) << " days.\n";
+		}
 
-            if (showDueToday) {
-                std::cout << "\nPayment " << paymentName
-                    << " is due today."
-                    << " Amount: $" << amount << "\n";
-            }
-        }
-
-        // Payment passed due date but is still in grace period
-        else if (currDay > dueDay) {
-            std::cout << "\nPayment " << paymentName
-                << " is within the grace period.\n";
-        }
-
-        // Payment is approaching
-        else if (currDay >= dueDay - reminderDays &&
-            currDay < dueDay) {
-
-            std::cout << "\nPayment " << paymentName
-                << " is due in "
-                << (dueDay - currDay)
-                << " days.\n";
-        }
-
-        // No reminder needed
-        else
-        {
-            std::cout << "\nNo reminders for payment "
-                << paymentName << ".\n";
-        }
-    }
+		// No reminder needed
+		else {
+			std::cout << "\nNo reminder needed for payment " << paymentName << ".\n";
+		}
+	}
 
 };
 
