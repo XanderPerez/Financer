@@ -3,9 +3,10 @@
 #include <fstream>
 #include <cstring>
 #include <iomanip>
-#include <string>\
+#include <string>
 
 #include "PaymentQueue.h"
+#include "PaymentReminder.h"
 
 
 int main()
