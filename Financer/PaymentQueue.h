@@ -26,6 +26,37 @@ private:
 	QueueNode* front;
 	QueueNode* rear;
 
+public:
+
+	bool isEmpty() const {
+		return front == nullptr;
+	}
+
+	PaymentQueue() {
+		front = nullptr;
+		rear = nullptr;
+	}
+
+	void Dequeue() {
+		if (isEmpty()) {
+			return;
+		}
+
+		QueueNode* temp = front;
+		front = front->next;
+		delete temp;
+
+		if (front == nullptr) {
+			rear = nullptr;
+		}
+	}
+
+	~PaymentQueue() {
+		while (!isEmpty()) {
+			Dequeue();
+		}
+	}
+
 };
 
 #endif
